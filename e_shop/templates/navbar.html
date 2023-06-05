@@ -1,0 +1,44 @@
+{% load static %}
+<nav class="navbar navbar-expand-lg navbar-blue bg-grey" xmlns="http://www.w3.org/1999/html">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#"><img src="{% static 'img/logo.png' %}" height="80px" width="100px" alt="logimage"></a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/"><strong>Home</strong></a>
+        </li>
+
+
+        <li class="nav-item dropdown {% if 'shapp' in request.path %} active {% endif %}">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+           <strong>Shop</strong>
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <li><a class="dropdown-item" href="{% url 'shapp:allProdCat' %}"> <strong>All Products</strong></a></li>
+            {% for cat in links %}
+            <li><a class="dropdown-item" href="{{cat.get_url}}"><strong>{{cat.name}}</strong></a></li>
+            {% endfor %}</ul> </li>
+             {% if item_count > 0 %}
+            <li class="nav-item">
+          <a class="nav-link" href="{% url 'cart:cart_detail' %}"><i class="fa-solid fa-cart-shopping"></i>({{item_count}})</a>
+        </li>
+        {% endif %}
+
+
+      </ul>
+      <div class="topnav">
+      <form class="d-flex" action="{% url 'search_app:searchresult' %}" method="get">
+        {% csrf_token %}
+        <input class="form-control me-2" type="search" placeholder="search" name="q" aria-label="search">
+        <button class="btn btn-outline-success" type="submit"><i class="fa-sharp fa-solid fa-magnifying-glass"></i></button>
+      </form>
+      </div>
+    </div>
+  </div>
+</nav>
+
